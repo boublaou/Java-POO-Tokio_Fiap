@@ -1,29 +1,28 @@
+import java.util.Date;
+
 //superclass
 public abstract class Conta {
 
 	// atributos
-	protected final Cliente cliente; // composição
+	protected final Cliente cliente; // composiÃ§Ã£o
 	protected final long numeroConta;
 	protected double saldo;
-	private static long contador; // transforma a variável como sendo da Classe e não do objeto
-
-	public static void exibirContador() {
-		System.out.println("Contas: " + contador);
-	}
+	protected Date dataAbertura;
+	private static long contador;
 
 	public Conta(Cliente cliente, long numeroConta) {
 		this.cliente = cliente;
 		this.numeroConta = numeroConta;
+		this.dataAbertura = new Date();
 		contador++;
 	}
 
-	public boolean sacar(double valor) throws SaldoInsuficiente {
+	public boolean sacar(double valor) {
 		if (valor > 0) {
 			if (this.saldo >= valor) {
 				this.saldo -= valor;
 				return true;
 			}
-			throw new SaldoInsuficiente("Saldo insuficiente, tente novamente!");
 		}
 		return false;
 	}
@@ -31,16 +30,20 @@ public abstract class Conta {
 	public void depositar(double valor) {
 		if (valor > 0) {
 			this.saldo += valor;
-			System.out.println("Operação realizada");
 		}
 	}
 
-	public void transferir(double valor, Conta conta) throws SaldoInsuficiente {
+	public void transferir(double valor, Conta conta) {
 		boolean teste = this.sacar(valor);
 		if (teste == true) {
 			conta.depositar(valor);
 		}
 	}
 
-	public abstract void exibirSaldo(); // abstract no método força a reescrita.
+	public abstract void exibirSaldo(); // abstract no mï¿½todo forï¿½a a reescrita.
+
+	public static void exibirContador() {
+		System.out.println("Contas: " + contador);
+	}
+
 }

@@ -1,20 +1,23 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-//abstract na classe proíbe a instância desta classe; apenas para herança. 
-public abstract class Cliente { 
-
+public class Cliente { 
+                                                                                                              
 	// atributos
 	protected String nome;
 	protected String endereco;
-	protected final String dataNasc; //transforma a variável em constante     
+	protected final Date dataNasc; //transforma a variÃ¡vel em constante     
 
 	// construtor
-	public Cliente(String nome, String endereco, String dataNasc) {
+	public Cliente(String nome, String endereco, String dataNasc) throws ParseException{
 		this.nome = nome;
 		this.endereco = endereco;
-		this.dataNasc = dataNasc;
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		this.dataNasc = formato.parse(dataNasc); 
 	}
 
-	//métodos getters / setters
+	//mÃ©todos getters / setters
 	public String getNome() {
 		return nome;
 	}
@@ -31,7 +34,7 @@ public abstract class Cliente {
 		this.endereco = endereco;
 	}
 
-	public String getDataNasc() {
+	public Date getDataNasc() {
 		return dataNasc;
 	}
 }
